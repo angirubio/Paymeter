@@ -3,7 +3,9 @@ package io.paymeter.assessment.pricing;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * Prueba unitaria para la clase Money
+ */
 class MoneyTest {
 
     @Test

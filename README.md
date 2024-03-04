@@ -1,107 +1,72 @@
-# Paymeter Backend Software Engineer Assessment
+# **Paymeter Backend Software Engineer Assessment**
 
-## Deliverable
+## **Descripción**
 
-There is quite some flexibility in what can be delivered, just ensure the service:
+Este proyecto es una aplicación de backend escrita en Java utilizando Spring Boot. El objetivo es calcular el precio de estacionamiento para diferentes escenarios basados en las tarifas y descuentos proporcionados por los clientes.
 
-* is a web service
-* can run on Mac OS X or Linux (x86-64)
-* is written in Java
-* uses Spring Boot
-* can make use of any existing open source libraries that don't directly address the problem statement (use your best judgement)
 
-Send us:
+## **Estructura del Proyecto**
+* **io.paymeter.assessment**: Contiene la clase principal de la aplicación y la configuración general.
+* **io.paymeter.assessment.parking**: Contiene el controlador REST para manejar las solicitudes de cálculo de precios.
+* **io.paymeter.assessment.pricing**: Contiene las clases relacionadas con el cálculo de precios, como las tarifas, descuentos y la lógica de cálculo de precios.
+## **Requisitos**
 
-* The full source code, including any code written which is not part of the normal program run (scripts, tests)
-* Clear instructions on how to obtain and run the program
-* Please provide any deliverables and instructions using a public Github (or similar) Repository as several people will need to inspect the solution
+Se requiere la implementación de un nuevo endpoint REST para calcular el precio del estacionamiento en función de los datos proporcionados, como el ID del estacionamiento, la hora de inicio y la hora de finalización.
 
-## Evaluation
-The point of the exercise is for us to see some of the code you wrote (and should be proud of).
-We will especially consider:
+## **Cómo Ejecutar**
 
-* Code organisation
-* Quality
-* Readability
-* Actually solving the problem
+* Java 17
+* Gradle
+* Docker (opcional)
 
-## Instructions
+### Pasos
+1. Clona este repositorio desde Github.
+2. Abre una terminal y navega hasta el directorio raíz del proyecto.
+3. Ejecuta el siguiente comando para ejecutar la aplicación:
 
-To run the application, run the following command in a terminal window:
-```shell
-# java 17 in host
-./gradlew bootRun
+    `./gradlew bootRun`
 
-# using docker
-docker build -t app . && docker run -it -p 8080:8080 app
-```
+    O, si prefieres utilizar Docker:
 
-Check service is running:
-```shell
-curl http://localhost:8080
-```
+   `docker build -t app . && docker run -it -p 8080:8080 app`
 
-Execute the following command to test the application:
-```shell
-# java 17 in host
-./gradlew test
+4. Una vez que la aplicación esté en funcionamiento, puedes realizar solicitudes a través de la API REST.
 
-# using docker
-docker run --rm -u gradle -v "$PWD":/home/gradle/project -w /home/gradle/project gradle:8-jdk17 gradle test
-```
+## **Cómo Probar**
 
-## Challenge
+Para ejecutar las pruebas unitarias, utiliza el siguiente comando en la terminal:
 
-Our customers want to be sure they're properly charging the correct amount on their parkings. 
-For this reason, we plan to create a new pricing calculation feature so they can test multiple scenarios.
-We have two customers with one parking each:
+`./gradlew test`
 
-* Customer 1:
-  * Parking id: `P000123`
-  * Hourly price: 2€
-  * Discounts
-    * Max price per day: 15€
+O, si prefieres utilizar Docker:
 
-* Customer 2 
-  * Parking id: `P000456`
-  * Hourly price: 3€
-  * Discounts
-    * Max price every 12 hours: 20€
-    * First hour is free
+`docker run --rm -u gradle -v "$PWD":/home/gradle/project -w /home/gradle/project gradle:8-jdk17 gradle test`
 
-Note:
-  * The price of a fraction of an hour is the same as a full hour
-  * If duration of the stay is less than one minute, parking is free
-  * There's no max time for a stay
-  * There's no limit of times that max price discount can be applied
-  * Max price discount starts counting when entering the parking 
+### **Endpoints Disponibles**
 
-Requirements:
-* Endpoint: POST `/tickets/calculate`
-* Request:
-  * Content type: JSON
-  * Fields:
-    * `parkingId`: string (required)
-    * `from`: ISO 8601 timestamp string (required)
-    * `to`: ISO 8601 timestamp string (optional, defaults to current time)
-* Response:
-  * Content type: JSON
-  * Fields:
-    * `parkingId`: string (required)
-    * `from`: ISO 8601 timestamp string (required)
-    * `to`: ISO 8601 timestamp string (required)
-    * `duration`: integer (minutes)
-    * `price`: string (integer amount + currency code, e.g. 2.35€ would be `"235EUR"`)
-  * Status codes:
-    * 200 ok
-    * 400 invalid request
-    * 404 parking not found
-    * 500 server error
-    * (feel free to return any status codes needed)
+#### **Calcular Precio de Estacionamiento**
+* **Endpoint**: POST /tickets/calculate
+* Solicitud: JSON
+* parkingID: (cadena) ID del estacionamiento (obligatorio)
+* from: (cadena) Marca de tiempo ISO 8601 de inicio (obligatorio)
+* to: (cadena) Marca de tiempo ISO 8601 de finalización (opcional, por defecto es la hora actual)
+* Respuesta: JSON
+* parkingID: (cadena) ID del estacionamiento (obligatorio)
+* from: (cadena) Marca de tiempo ISO 8601 de inicio (obligatorio)
+* to: (cadena) Marca de tiempo ISO 8601 de finalización (obligatorio)
+* duration: (entero) Duración en minutos
+* price: (cadena) Precio en formato de moneda (p.ej. "235EUR")
 
-Example usage:
-```shell
-curl -X POST http://localhost:8080/tickets/calculate \
-  -H "Content-Type: application/json" \
-  -d '{"parkingId":"P000123","from":"2024-02-27T09:00:00"}'
-```
+#### **Estado de la Aplicación**
+
+Para verificar el estado de salud de la aplicación, puedes acceder a la URL raíz:
+`GET /`
+
+Esta solicitud debería devolver _"Everything Ok!"_ si la aplicación está funcionando correctamente.
+
+
+***
+
+Angi Rubio
+
+[linkedin.com/in/angirubio]()

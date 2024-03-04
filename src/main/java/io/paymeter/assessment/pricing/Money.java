@@ -3,7 +3,9 @@ package io.paymeter.assessment.pricing;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Objects;
-
+/**
+ * Clase que representa el dinero con un monto y una moneda
+ */
 public class Money {
     private static final Currency DEFAULT_CURRENCY = Currency.getInstance("EUR");
 

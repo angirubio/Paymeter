@@ -1,0 +1,2 @@
+{"timestamp":"2024-03-04T16:08:42.959+00:00","status":400,"error":"Bad Request","path":"/tickets/calculate"}--_curl_--"parkingId":"P000123"
+--_curl_--"from":"2024-02-27T09:00:00"
